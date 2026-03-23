@@ -39,8 +39,9 @@ export default function Hero() {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "bottom top",
+          end: "+=120%",
           scrub: 1.5,
+          pin: true,
         },
       });
 
@@ -90,15 +91,6 @@ export default function Hero() {
         },
         0
       );
-
-      tl.to(
-        heroRef.current,
-        {
-          opacity: 0,
-          ease: "none",
-        },
-        0.9
-      );
     }, heroRef);
 
     return () => ctx.revert();
@@ -109,7 +101,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="h-[200vh] bg-black text-white relative overflow-hidden"
+      className="h-[150vh] bg-black text-white relative overflow-hidden"
     >
       <div
         ref={glowRef}
