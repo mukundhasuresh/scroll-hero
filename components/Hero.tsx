@@ -12,6 +12,7 @@ export default function Hero() {
   const statsRef = useRef<HTMLDivElement[]>([]);
   const imageRef = useRef(null);
   const bgRef = useRef(null);
+  const trackRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -66,6 +67,16 @@ export default function Hero() {
         },
       });
 
+      gsap.to(imageRef.current, {
+        scale: 1.6,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
       gsap.to(bgRef.current, {
         x: -300,
         ease: "none",
@@ -88,6 +99,17 @@ export default function Hero() {
         },
       });
 
+      gsap.to(titleRef.current, {
+        opacity: 0,
+        y: -150,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "center top",
+          scrub: true,
+        },
+      });
+
       gsap.to(heroRef.current, {
         opacity: 0,
         scrollTrigger: {
@@ -95,6 +117,18 @@ export default function Hero() {
           start: "center top",
           end: "bottom top",
           scrub: true,
+        },
+      });
+
+      gsap.to(trackRef.current, {
+        x: "-50%",
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "+=1000",
+          scrub: true,
+          pin: true,
         },
       });
     }, heroRef);
@@ -109,47 +143,57 @@ export default function Hero() {
       ref={heroRef}
       className="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-black via-neutral-900 to-black text-white overflow-hidden"
     >
-      <div
-        ref={titleRef}
-        className="text-5xl md:text-7xl font-semibold tracking-[0.6em] text-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-      >
-        {text.map((char, i) => (
-          <span key={i} className="inline-block">
-            {char === " " ? "\u00A0" : char}
-          </span>
-        ))}
-      </div>
-
-      <div className="flex gap-16 mt-16">
-        {[
-          { value: "98%", label: "Success Rate" },
-          { value: "120+", label: "Clients" },
-          { value: "24/7", label: "Support" },
-        ].map((stat, i) => (
+      <div ref={trackRef} className="flex w-[200%]">
+        <div className="w-screen flex flex-col justify-center items-center">
           <div
-            key={i}
-            ref={(el) => (statsRef.current[i] = el!)}
-            className="text-center"
+            ref={titleRef}
+            className="text-5xl md:text-7xl font-semibold tracking-[0.6em] text-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
           >
-            <h2 className="text-3xl font-semibold">{stat.value}</h2>
-            <p className="text-sm opacity-60 mt-1 tracking-wide">
-              {stat.label}
-            </p>
+            {text.map((char, i) => (
+              <span key={i} className="inline-block">
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
           </div>
-        ))}
+
+          <div className="flex gap-16 mt-16">
+            {[
+              { value: "98%", label: "Success Rate" },
+              { value: "120+", label: "Clients" },
+              { value: "24/7", label: "Support" },
+            ].map((stat, i) => (
+              <div
+                key={i}
+                ref={(el) => (statsRef.current[i] = el!)}
+                className="text-center"
+              >
+                <h2 className="text-3xl font-semibold">{stat.value}</h2>
+                <p className="text-sm opacity-60 mt-1 tracking-wide">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div
+            ref={bgRef}
+            className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-neutral-800 to-transparent"
+          />
+
+          <img
+            ref={imageRef}
+            src="/car.png"
+            className="absolute bottom-10 w-[300px] object-contain will-change-transform"
+            alt="car"
+          />
+        </div>
+
+        <div className="w-screen flex justify-center items-center">
+          <h1 className="text-6xl font-bold text-white">
+            EXPERIENCE SPEED
+          </h1>
+        </div>
       </div>
-
-      <div
-        ref={bgRef}
-        className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-neutral-800 to-transparent"
-      />
-
-      <img
-        ref={imageRef}
-        src="/car.png"
-        className="absolute bottom-10 w-[300px] object-contain will-change-transform"
-        alt="car"
-      />
     </section>
   );
 }

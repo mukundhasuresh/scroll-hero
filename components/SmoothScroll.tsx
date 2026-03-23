@@ -2,6 +2,10 @@
 
 import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll({
   children,
@@ -10,12 +14,13 @@ export default function SmoothScroll({
 }) {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.08, // smoothness
+      lerp: 0.08,
       smoothWheel: true,
     });
 
     function raf(time: number) {
       lenis.raf(time);
+      ScrollTrigger.update(); // 🔥 IMPORTANT
       requestAnimationFrame(raf);
     }
 
