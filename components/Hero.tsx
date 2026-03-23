@@ -18,7 +18,6 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const letters = titleRef.current?.querySelectorAll("span");
 
-      // ✨ Intro
       gsap.from(letters, {
         opacity: 0,
         y: 60,
@@ -36,7 +35,6 @@ export default function Hero() {
         ease: "power2.out",
       });
 
-      // 🎯 Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -46,7 +44,6 @@ export default function Hero() {
         },
       });
 
-      // 🚗 Car motion (realistic acceleration)
       tl.to(carRef.current, {
         x: window.innerWidth * 0.7,
         scale: 1.35,
@@ -54,7 +51,6 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-      // ⚡ Speed trail
       tl.to(
         trailRef.current,
         {
@@ -65,7 +61,6 @@ export default function Hero() {
         0
       );
 
-      // 🌌 Glow expansion
       tl.to(
         glowRef.current,
         {
@@ -76,12 +71,11 @@ export default function Hero() {
         0
       );
 
-      // 🧠 Depth
       tl.to(
         titleRef.current,
         {
-          y: -180,
-          opacity: 0.1,
+          y: -160,
+          opacity: 0.15,
           ease: "none",
         },
         0
@@ -90,14 +84,13 @@ export default function Hero() {
       tl.to(
         statsRef.current,
         {
-          y: -120,
+          y: -100,
           opacity: 0,
           ease: "none",
         },
         0
       );
 
-      // 🎬 Exit
       tl.to(
         heroRef.current,
         {
@@ -118,25 +111,27 @@ export default function Hero() {
       ref={heroRef}
       className="h-[200vh] bg-black text-white relative overflow-hidden"
     >
-      {/* 🌌 BACKGROUND GLOW */}
       <div
         ref={glowRef}
         className="absolute top-1/2 left-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
       />
 
-      <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-20">
+      <div className="sticky top-0 h-screen flex flex-col justify-center items-start px-6 md:px-20">
         
-        {/* 🔥 BIGGER TITLE */}
         <div
           ref={titleRef}
           className="
-            text-4xl 
-            sm:text-6xl 
-            md:text-8xl 
-            lg:text-[100px]
+            w-full
+            max-w-[1400px]
+            text-3xl 
+            sm:text-5xl 
+            md:text-7xl 
+            lg:text-[90px]
             font-bold 
-            tracking-[0.25em] 
-            leading-tight
+            tracking-[0.15em]
+            leading-[1.1]
+            whitespace-nowrap
+            overflow-hidden
           "
         >
           {text.map((char, i) => (
@@ -146,7 +141,6 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* STATS */}
         <div className="flex gap-6 md:gap-16 mt-8 md:mt-12">
           {[
             { value: "98%", label: "Success Rate" },
@@ -167,7 +161,6 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* 🚗 CAR */}
         <img
           ref={carRef}
           src="/car.png"
@@ -177,14 +170,14 @@ export default function Hero() {
             bottom-10 
             left-4 
             md:left-20 
-            w-[180px] 
+            w-[160px] 
+            sm:w-[200px]
             md:w-[320px]
             will-change-transform
             drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)]
           "
         />
 
-        {/* ⚡ SPEED TRAIL */}
         <div
           ref={trailRef}
           className="
