@@ -67,27 +67,33 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="h-screen flex flex-col justify-center items-center bg-black text-white overflow-hidden"
+      className="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-black via-neutral-900 to-black text-white overflow-hidden"
     >
       <div
         ref={titleRef}
-        className="text-4xl md:text-6xl tracking-[0.5em] flex flex-wrap justify-center"
+        className="text-5xl md:text-7xl font-semibold tracking-[0.6em] text-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
       >
         {text.map((char, i) => (
-          <span key={i}>{char === " " ? "\u00A0" : char}</span>
+          <span key={i} className="inline-block">
+            {char === " " ? "\u00A0" : char}
+          </span>
         ))}
       </div>
 
-      <div className="flex gap-10 mt-10">
-        {["98% Success", "120+ Clients", "24/7 Support"].map((stat, i) => (
+      <div className="flex gap-16 mt-16">
+        {[
+          { value: "98%", label: "Success Rate" },
+          { value: "120+", label: "Clients" },
+          { value: "24/7", label: "Support" },
+        ].map((stat, i) => (
           <div
             key={i}
             ref={(el) => (statsRef.current[i] = el!)}
             className="text-center"
           >
-            <h2 className="text-2xl font-bold">{stat.split(" ")[0]}</h2>
-            <p className="text-sm opacity-70">
-              {stat.split(" ").slice(1).join(" ")}
+            <h2 className="text-3xl font-semibold">{stat.value}</h2>
+            <p className="text-sm opacity-60 mt-1 tracking-wide">
+              {stat.label}
             </p>
           </div>
         ))}
