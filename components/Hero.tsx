@@ -11,8 +11,7 @@ export default function Hero() {
   const titleRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement[]>([]);
   const imageRef = useRef(null);
-  const bgRef = useRef(null);
-  const trackRef = useRef(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -44,91 +43,30 @@ export default function Hero() {
       });
 
       gsap.to(imageRef.current, {
-        x: 600,
-        y: -120,
-        scale: 1.5,
-        rotation: 10,
+        x: 400,
+        y: -80,
+        scale: 1.3,
+        rotation: 6,
         ease: "none",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-
-      gsap.to(imageRef.current, {
-        filter: "blur(4px)",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top center",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(imageRef.current, {
-        scale: 1.6,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(bgRef.current, {
-        x: -300,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(titleRef.current, {
-        y: -100,
-        opacity: 0.3,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(titleRef.current, {
-        opacity: 0,
-        y: -150,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "center top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(heroRef.current, {
-        opacity: 0,
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "center top",
-          end: "bottom top",
-          scrub: true,
+          end: () => `+=${trackRef.current?.scrollWidth}`,
+          scrub: 1,
         },
       });
 
       gsap.to(trackRef.current, {
-        x: "-50%",
+        x: () =>
+          -(trackRef.current!.scrollWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: "+=1000",
-          scrub: true,
+          end: () => `+=${trackRef.current!.scrollWidth}`,
+          scrub: 1,
           pin: true,
+          anticipatePin: 1,
         },
       });
     }, heroRef);
@@ -141,13 +79,13 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="h-screen flex flex-col justify-center items-center bg-gradient-to-b from-black via-neutral-900 to-black text-white overflow-hidden"
+      className="relative h-screen w-full overflow-hidden bg-black text-white"
     >
-      <div ref={trackRef} className="flex w-[200%]">
-        <div className="w-screen flex flex-col justify-center items-center">
+      <div ref={trackRef} className="flex h-full">
+        <div className="w-screen h-full flex flex-col justify-center items-center relative">
           <div
             ref={titleRef}
-            className="text-5xl md:text-7xl font-semibold tracking-[0.6em] text-center drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            className="text-5xl md:text-7xl font-semibold tracking-[0.6em] text-center"
           >
             {text.map((char, i) => (
               <span key={i} className="inline-block">
@@ -168,28 +106,23 @@ export default function Hero() {
                 className="text-center"
               >
                 <h2 className="text-3xl font-semibold">{stat.value}</h2>
-                <p className="text-sm opacity-60 mt-1 tracking-wide">
+                <p className="text-sm opacity-60 mt-1">
                   {stat.label}
                 </p>
               </div>
             ))}
           </div>
 
-          <div
-            ref={bgRef}
-            className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-neutral-800 to-transparent"
-          />
-
           <img
             ref={imageRef}
             src="/car.png"
-            className="absolute bottom-10 w-[300px] object-contain will-change-transform"
+            className="absolute bottom-10 w-[300px]"
             alt="car"
           />
         </div>
 
-        <div className="w-screen flex justify-center items-center">
-          <h1 className="text-6xl font-bold text-white">
+        <div className="w-screen h-full flex items-center justify-center">
+          <h1 className="text-6xl md:text-8xl font-bold">
             EXPERIENCE SPEED
           </h1>
         </div>
