@@ -7,17 +7,19 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement[]>([]);
-  const carRef = useRef<HTMLImageElement>(null);
-  const trailRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<HTMLDivElement[]>([]);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLDivElement | null>(null);
+  const statsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const carRef = useRef<HTMLImageElement | null>(null);
+  const trailRef = useRef<HTMLDivElement | null>(null);
+  const glowRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const letters = titleRef.current?.querySelectorAll("span");
+      if (!titleRef.current) return;
+
+      const letters = titleRef.current.querySelectorAll("span");
 
       gsap.from(letters, {
         opacity: 0,
@@ -27,7 +29,7 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-      gsap.from(statsRef.current, {
+      gsap.from(statsRef.current.filter(Boolean), {
         opacity: 0,
         y: 40,
         stagger: 0.15,
@@ -47,20 +49,36 @@ export default function Hero() {
         },
       });
 
-      tl.to(carRef.current, {
-        x: window.innerWidth * 0.65,
-        scale: 1.3,
-        rotation: 3,
-        ease: "none",
-      });
+      if (carRef.current) {
+        tl.to(carRef.current, {
+          x: window.innerWidth * 0.65,
+          scale: 1.3,
+          rotation: 3,
+          ease: "none",
+        });
+      }
 
-      tl.to(trailRef.current, { width: 400, opacity: 0 }, 0);
-      tl.to(glowRef.current, { scale: 1.8, opacity: 0.2 }, 0);
+      if (trailRef.current) {
+        tl.to(trailRef.current, { width: 400, opacity: 0 }, 0);
+      }
 
-      tl.to(titleRef.current, { y: -150, opacity: 0 }, 0);
-      tl.to(statsRef.current, { y: -120, opacity: 0 }, 0);
+      if (glowRef.current) {
+        tl.to(glowRef.current, { scale: 1.8, opacity: 0.2 }, 0);
+      }
+
+      if (titleRef.current) {
+        tl.to(titleRef.current, { y: -150, opacity: 0 }, 0);
+      }
+
+      tl.to(
+        statsRef.current.filter(Boolean),
+        { y: -120, opacity: 0 },
+        0
+      );
 
       cardsRef.current.forEach((card, i) => {
+        if (!card) return;
+
         tl.fromTo(
           card,
           { opacity: 0, y: 80, scale: 0.9 },
@@ -75,7 +93,7 @@ export default function Hero() {
       });
 
       tl.to(
-        cardsRef.current,
+        cardsRef.current.filter(Boolean),
         {
           opacity: 0,
           y: -60,
@@ -132,7 +150,12 @@ export default function Hero() {
             { value: "120+", label: "Clients" },
             { value: "24/7", label: "Support" },
           ].map((stat, i) => (
-            <div key={i} ref={(el) => (statsRef.current[i] = el!)}>
+            <div
+              key={i}
+              ref={(el) => {
+                statsRef.current[i] = el;
+              }}
+            >
               <h2 className="text-xl md:text-3xl font-semibold">
                 {stat.value}
               </h2>
@@ -184,7 +207,9 @@ export default function Hero() {
             ].map((card, i) => (
               <div
                 key={i}
-                ref={(el) => (cardsRef.current[i] = el!)}
+                ref={(el) => {
+                  cardsRef.current[i] = el;
+                }}
                 className={`p-6 md:p-8 rounded-2xl ${card.color}`}
               >
                 <h2 className="text-3xl md:text-4xl font-bold">
