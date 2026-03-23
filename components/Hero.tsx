@@ -8,19 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement[]>([]);
   const carRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ✨ Intro animation
       const letters = titleRef.current?.querySelectorAll("span");
 
+      // ✨ Smooth stagger (premium feel)
       gsap.from(letters, {
         opacity: 0,
-        y: 50,
+        y: 40,
         stagger: 0.04,
         duration: 0.8,
         ease: "power3.out",
@@ -35,44 +34,44 @@ export default function Hero() {
         ease: "power2.out",
       });
 
-      // 🚗 Car subtle idle
-      gsap.to(carRef.current, {
-        y: -6,
-        repeat: -1,
-        yoyo: true,
-        duration: 1.2,
-        ease: "sine.inOut",
-      });
-
-      // 🎯 Horizontal scroll (MAIN)
-      const totalWidth =
-        trackRef.current!.scrollWidth - window.innerWidth;
-
-      gsap.to(trackRef.current, {
-        x: -totalWidth,
-        ease: "none",
+      // 🎯 MASTER TIMELINE (important)
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
-          end: () => `+=${totalWidth}`,
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
+          end: "bottom top",
+          scrub: 1.2, // smoother than 1
         },
       });
 
-      // 🚗 Car movement synced with scroll
-      gsap.to(carRef.current, {
-        x: 500,
-        scale: 1.2,
+      // 🚗 Car motion (REAL smooth feel)
+      tl.to(carRef.current, {
+        x: 600,
+        scale: 1.25,
+        rotation: 3,
         ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: () => `+=${totalWidth}`,
-          scrub: 1,
-        },
       });
+
+      // 🧠 Depth effect (THIS WAS MISSING)
+      tl.to(
+        titleRef.current,
+        {
+          y: -150,
+          opacity: 0.2,
+          ease: "none",
+        },
+        0
+      );
+
+      tl.to(
+        statsRef.current,
+        {
+          y: -80,
+          opacity: 0,
+          ease: "none",
+        },
+        0
+      );
     }, heroRef);
 
     return () => ctx.revert();
@@ -83,62 +82,51 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative h-screen w-full bg-black text-white overflow-hidden"
+      className="h-[200vh] bg-black text-white relative"
     >
-      {/* TRACK */}
-      <div ref={trackRef} className="flex h-full">
+      {/* STICKY HERO */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center px-20 overflow-hidden">
         
-        {/* LEFT PANEL */}
-        <div className="w-screen h-full flex flex-col justify-center items-start px-20 relative">
-          
-          {/* TITLE */}
-          <div
-            ref={titleRef}
-            className="text-5xl md:text-7xl font-semibold tracking-[0.5em] leading-[1.2]"
-          >
-            {text.map((char, i) => (
-              <span key={i} className="inline-block">
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </div>
-
-          {/* STATS */}
-          <div className="flex gap-16 mt-12">
-            {[
-              { value: "98%", label: "Success Rate" },
-              { value: "120+", label: "Clients" },
-              { value: "24/7", label: "Support" },
-            ].map((stat, i) => (
-              <div
-                key={i}
-                ref={(el) => (statsRef.current[i] = el!)}
-              >
-                <h2 className="text-3xl font-semibold">
-                  {stat.value}
-                </h2>
-                <p className="text-sm text-white/50 mt-1">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* CAR */}
-          <img
-            ref={carRef}
-            src="/car.png"
-            alt="car"
-            className="absolute bottom-16 left-20 w-[280px] will-change-transform"
-          />
+        {/* TITLE */}
+        <div
+          ref={titleRef}
+          className="text-6xl md:text-8xl font-semibold tracking-[0.35em] leading-tight"
+        >
+          {text.map((char, i) => (
+            <span key={i} className="inline-block">
+              {char === " " ? "\u00A0" : char}
+            </span>
+          ))}
         </div>
 
-        {/* RIGHT PANEL */}
-        <div className="w-screen h-full flex items-center justify-center">
-          <h1 className="text-7xl md:text-9xl font-bold tracking-tight">
-            EXPERIENCE<br />SPEED
-          </h1>
+        {/* STATS */}
+        <div className="flex gap-16 mt-12">
+          {[
+            { value: "98%", label: "Success Rate" },
+            { value: "120+", label: "Clients" },
+            { value: "24/7", label: "Support" },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              ref={(el) => (statsRef.current[i] = el!)}
+            >
+              <h2 className="text-3xl font-semibold">
+                {stat.value}
+              </h2>
+              <p className="text-sm text-white/50">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </div>
+
+        {/* CAR */}
+        <img
+          ref={carRef}
+          src="/car.png"
+          alt="car"
+          className="absolute bottom-20 left-20 w-[300px] will-change-transform"
+        />
       </div>
     </section>
   );
