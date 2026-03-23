@@ -34,16 +34,24 @@ export default function Hero() {
       });
 
       gsap.to(imageRef.current, {
-        x: 500,
-        y: -100,
-        scale: 1.4,
-        rotation: 15,
+        rotation: 2,
+        yoyo: true,
+        repeat: -1,
+        duration: 1.2,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(imageRef.current, {
+        x: 800,
+        y: -150,
+        scale: 1.5,
+        rotation: 5,
         ease: "none",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: 1.5,
         },
       });
 
@@ -99,10 +107,12 @@ export default function Hero() {
         ))}
       </div>
 
-      <div
+      <img
         ref={imageRef}
-        className="absolute bottom-10 w-40 h-20 bg-white rounded-lg"
-      ></div>
+        src="/car.png"
+        className="absolute bottom-10 w-[300px] object-contain will-change-transform"
+        alt="car"
+      />
     </section>
   );
 }
