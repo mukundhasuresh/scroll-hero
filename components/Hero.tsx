@@ -16,7 +16,7 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const letters = titleRef.current?.querySelectorAll("span");
 
-      // ✨ Smooth stagger (premium feel)
+      // ✨ Intro
       gsap.from(letters, {
         opacity: 0,
         y: 40,
@@ -34,29 +34,27 @@ export default function Hero() {
         ease: "power2.out",
       });
 
-      // 🎯 MASTER TIMELINE (important)
+      // 🎯 Timeline (better feel)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1.2, // smoother than 1
+          scrub: 1.2,
         },
       });
 
-      // 🚗 Car motion (REAL smooth feel)
       tl.to(carRef.current, {
-        x: 600,
-        scale: 1.25,
-        rotation: 3,
+        x: window.innerWidth * 0.6,
+        scale: 1.2,
+        rotation: 2,
         ease: "none",
       });
 
-      // 🧠 Depth effect (THIS WAS MISSING)
       tl.to(
         titleRef.current,
         {
-          y: -150,
+          y: -120,
           opacity: 0.2,
           ease: "none",
         },
@@ -84,13 +82,12 @@ export default function Hero() {
       ref={heroRef}
       className="h-[200vh] bg-black text-white relative"
     >
-      {/* STICKY HERO */}
-      <div className="sticky top-0 h-screen flex flex-col justify-center px-20 overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-20 overflow-hidden">
         
         {/* TITLE */}
         <div
           ref={titleRef}
-          className="text-6xl md:text-8xl font-semibold tracking-[0.35em] leading-tight"
+          className="text-3xl sm:text-5xl md:text-7xl font-semibold tracking-[0.3em] leading-tight"
         >
           {text.map((char, i) => (
             <span key={i} className="inline-block">
@@ -100,7 +97,7 @@ export default function Hero() {
         </div>
 
         {/* STATS */}
-        <div className="flex gap-16 mt-12">
+        <div className="flex gap-6 md:gap-16 mt-8 md:mt-12">
           {[
             { value: "98%", label: "Success Rate" },
             { value: "120+", label: "Clients" },
@@ -110,10 +107,10 @@ export default function Hero() {
               key={i}
               ref={(el) => (statsRef.current[i] = el!)}
             >
-              <h2 className="text-3xl font-semibold">
+              <h2 className="text-xl md:text-3xl font-semibold">
                 {stat.value}
               </h2>
-              <p className="text-sm text-white/50">
+              <p className="text-xs md:text-sm text-white/50">
                 {stat.label}
               </p>
             </div>
@@ -125,7 +122,7 @@ export default function Hero() {
           ref={carRef}
           src="/car.png"
           alt="car"
-          className="absolute bottom-20 left-20 w-[300px] will-change-transform"
+          className="absolute bottom-10 left-4 md:left-20 w-[180px] md:w-[300px] will-change-transform"
         />
       </div>
     </section>
