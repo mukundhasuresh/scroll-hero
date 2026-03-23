@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scroll-Driven Hero Animation
+
+A modern, scroll-based interactive hero section built using **Next.js, GSAP, and Tailwind CSS**.  
+This project recreates a premium motion experience where animations are tightly synced with user scroll.
+
+---
+
+## Live Demo
+
+https://scroll-hero-iaer.vercel.app/
+
+---
+
+## Overview
+
+This project demonstrates advanced frontend animation techniques using **GSAP ScrollTrigger**, focusing on:
+
+- Scroll-synced motion (not time-based)
+- Smooth UI transitions
+- Performance-optimized animations
+- Clean and responsive layout
+
+
+---
+
+## Features
+
+### Hero Section
+- Full-screen above-the-fold layout
+- Letter-spaced animated headline:  
+  **W E L C O M E I T Z F I Z Z**
+- Smooth staggered intro animation
+
+---
+
+### Animated Statistics
+- Sequential reveal of key metrics
+- Subtle motion with easing
+- Clean typography and spacing
+
+---
+
+### Scroll-Based Animation
+- Car movement tied directly to scroll progress
+- Scale and rotation effects for depth
+- Smooth acceleration using GSAP easing
+
+---
+
+### Scroll-Revealed Cards
+- Cards appear progressively as user scrolls
+- Staggered animation for premium feel
+- Fully responsive grid layout
+
+---
+
+### Performance Optimized
+- Uses transform-based animations (translate, scale, rotate)
+- Avoids layout reflows
+- Efficient scroll handling via GSAP ScrollTrigger
+
+---
+
+## Tech Stack
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- GSAP (ScrollTrigger)
+
+---
+
+## Responsive Design
+
+- Mobile-first approach
+- Optimized for:
+  - Mobile
+  - Tablet
+  - Desktop
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+git clone https://github.com/mukundhasuresh/scroll-hero.git  
+cd scroll-hero  
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm install  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Run development server
 
-## Learn More
+npm run dev  
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Build for production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+npm run build  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is deployed using **Vercel**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Steps:
+1. Push code to GitHub
+2. Import repo into Vercel
+3. Click Deploy
+
+---
+
+## Key Learnings
+
+- Building scroll-driven animations using GSAP
+- Using ScrollTrigger for interaction-based motion
+- Creating smooth UI transitions tied to user input
+- Handling performance optimization in animations
+- Designing responsive layouts with Tailwind CSS
+
+---
+
+## Notes
+
+- Tailwind CSS was used instead of Bootstrap for modern utility-based styling
+- All animations are controlled via scroll (no autoplay)
+- Focused on motion quality and smooth interaction
+
+---
+
+## Author
+
+Mukundha Suresh  
+
+GitHub: https://github.com/mukundhasuresh
+
+LinkedIn: https://www.linkedin.com/in/mukundha-suresh-390309203/
+
+---
+
+## Final Thoughts
+
+This project showcases the ability to build **high-quality interactive UI experiences** using modern frontend tools, focusing on motion design, performance, and user experience.
