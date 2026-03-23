@@ -11,12 +11,13 @@ export default function Hero() {
   const titleRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement[]>([]);
   const carRef = useRef<HTMLImageElement>(null);
+  const trailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const letters = titleRef.current?.querySelectorAll("span");
 
-      // ✨ Intro
+      // ✨ Intro Animation
       gsap.from(letters, {
         opacity: 0,
         y: 40,
@@ -34,7 +35,7 @@ export default function Hero() {
         ease: "power2.out",
       });
 
-      // 🎯 Timeline (better feel)
+      // 🎯 Main Timeline (scroll-based)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroRef.current,
@@ -44,18 +45,31 @@ export default function Hero() {
         },
       });
 
+      // 🚗 Car Motion (acceleration feel)
       tl.to(carRef.current, {
-        x: window.innerWidth * 0.6,
-        scale: 1.2,
-        rotation: 2,
-        ease: "none",
+        x: window.innerWidth * 0.65,
+        scale: 1.25,
+        rotation: 3,
+        ease: "power2.out",
       });
 
+      // ⚡ Speed Trail
+      tl.to(
+        trailRef.current,
+        {
+          width: 320,
+          opacity: 0,
+          ease: "none",
+        },
+        0
+      );
+
+      // 🧠 Depth effect
       tl.to(
         titleRef.current,
         {
-          y: -120,
-          opacity: 0.2,
+          y: -140,
+          opacity: 0.15,
           ease: "none",
         },
         0
@@ -64,11 +78,21 @@ export default function Hero() {
       tl.to(
         statsRef.current,
         {
-          y: -80,
+          y: -100,
           opacity: 0,
           ease: "none",
         },
         0
+      );
+
+      // 🎬 Cinematic fade out
+      tl.to(
+        heroRef.current,
+        {
+          opacity: 0,
+          ease: "none",
+        },
+        0.85
       );
     }, heroRef);
 
@@ -80,14 +104,14 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="h-[200vh] bg-black text-white relative"
+      className="h-[200vh] bg-gradient-to-b from-black via-neutral-900 to-black text-white relative"
     >
       <div className="sticky top-0 h-screen flex flex-col justify-center px-6 md:px-20 overflow-hidden">
         
         {/* TITLE */}
         <div
           ref={titleRef}
-          className="text-3xl sm:text-5xl md:text-7xl font-semibold tracking-[0.3em] leading-tight"
+          className="text-3xl sm:text-5xl md:text-7xl font-semibold tracking-[0.28em] leading-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.12)]"
         >
           {text.map((char, i) => (
             <span key={i} className="inline-block">
@@ -117,12 +141,18 @@ export default function Hero() {
           ))}
         </div>
 
-        {/* CAR */}
+        {/* 🚗 CAR */}
         <img
           ref={carRef}
           src="/car.png"
           alt="car"
-          className="absolute bottom-10 left-4 md:left-20 w-[180px] md:w-[300px] will-change-transform"
+          className="absolute bottom-10 left-4 md:left-20 w-[180px] md:w-[300px] will-change-transform drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+        />
+
+        {/* ⚡ SPEED TRAIL */}
+        <div
+          ref={trailRef}
+          className="absolute bottom-[72px] md:bottom-[90px] left-4 md:left-20 h-[4px] w-20 bg-white/40 blur-sm"
         />
       </div>
     </section>
