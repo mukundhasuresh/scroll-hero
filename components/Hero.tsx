@@ -43,16 +43,26 @@ export default function Hero() {
       });
 
       gsap.to(imageRef.current, {
-        x: 800,
-        y: -150,
+        x: 600,
+        y: -120,
         scale: 1.5,
-        rotation: 5,
+        rotation: 10,
         ease: "none",
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
           end: "bottom top",
           scrub: 1.5,
+        },
+      });
+
+      gsap.to(imageRef.current, {
+        filter: "blur(4px)",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top center",
+          end: "bottom top",
+          scrub: true,
         },
       });
 
@@ -73,6 +83,16 @@ export default function Hero() {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to(heroRef.current, {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "center top",
           end: "bottom top",
           scrub: true,
         },
