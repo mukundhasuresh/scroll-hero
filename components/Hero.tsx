@@ -34,9 +34,22 @@ export default function Hero() {
       });
 
       gsap.to(imageRef.current, {
-        x: 300,
-        scale: 1.2,
-        rotation: 10,
+        x: 500,
+        y: -100,
+        scale: 1.4,
+        rotation: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.2,
+        },
+      });
+
+      gsap.to(titleRef.current, {
+        y: -100,
+        opacity: 0.3,
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
