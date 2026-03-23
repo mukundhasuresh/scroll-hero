@@ -11,6 +11,7 @@ export default function Hero() {
   const titleRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement[]>([]);
   const imageRef = useRef(null);
+  const bgRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -52,6 +53,17 @@ export default function Hero() {
           start: "top top",
           end: "bottom top",
           scrub: 1.5,
+        },
+      });
+
+      gsap.to(bgRef.current, {
+        x: -300,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
         },
       });
 
@@ -106,6 +118,11 @@ export default function Hero() {
           </div>
         ))}
       </div>
+
+      <div
+        ref={bgRef}
+        className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-neutral-800 to-transparent"
+      />
 
       <img
         ref={imageRef}
